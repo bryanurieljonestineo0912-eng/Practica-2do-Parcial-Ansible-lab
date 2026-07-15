@@ -1,0 +1,54 @@
+---
+- name: Laboratorio Docker con Ansible
+  hosts: docker
+  become: false
+
+  tasks:
+
+    - name: Obtener nombre del host
+      command: hostname
+      register: hostname_output
+
+    - name: Mostrar nombre del host
+      debug:
+        msg: "{{ hostname_output.stdout }}"
+
+    - name: Obtener sistema operativo
+      command: cat /etc/os-release
+      register: os_output
+
+    - name: Mostrar sistema operativo
+      debug:
+        msg: "{{ os_output.stdout }}"
+
+    - name: Crear directorio
+      file:
+        path: /tmp/ansible-demo
+        state: directory
+
+    - name: Crear archivo info.txt
+      file:
+        path: /tmp/ansible-demo/info.txt
+        state: touch
+
+    - name: Escribir información
+      copy:
+        dest: /tmp/ansible-demo/info.txt
+        content: |
+          Servidor: {{ hostname_output.stdout }}
+          Sistema Operativo:
+          {{ os_output.stdout }}
+
+    - name: Crear directorios
+      file:
+        path: "/tmp/ansible-demo/{{ item }}"
+        state: directory
+      loop:
+        - logs
+        - backup
+        - config
+
+    - name: Mostrar mensaje si es Ubuntu
+      debug:
+        msg: "Este servidor utiliza Ubuntu."
+      when: "'Ubuntu' in os_output.stdout"
