@@ -57,4 +57,5 @@ El playbook realiza lo siguiente en ambos servidores:
 
 ## Captura de pantalla
 
-*(Agregar aquí la captura de la ejecución exitosa del playbook)*
+<img width="1914" height="957" alt="image" src="https://github.com/user-attachments/assets/3ae25394-e8a2-4105-9361-f9d71a5dd48c" />
+
